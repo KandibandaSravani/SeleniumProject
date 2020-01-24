@@ -15,14 +15,15 @@ import com.training.bean.LoginBean;
 import com.training.dao.ELearningDAO;
 import com.training.dataproviders.LoginDataProviders;
 import com.training.generics.ScreenShot;
-import com.training.pom.LoginPOM;
+
+import com.training.pom.POMLogin;
 import com.training.utility.DriverFactory;
 import com.training.utility.DriverNames;
 
 public class LoginExcelTest {
 	private WebDriver driver;
 	private String baseUrl;
-	private LoginPOM loginPOM;
+	private POMLogin loginPOM;
 	private static Properties properties;
 	private ScreenShot screenShot;
 
@@ -36,7 +37,7 @@ public class LoginExcelTest {
 	@BeforeMethod
 	public void setUp() throws Exception {
 		driver = DriverFactory.getDriver(DriverNames.CHROME);
-		loginPOM = new LoginPOM(driver);
+		loginPOM = new POMLogin(driver);
 		baseUrl = properties.getProperty("baseURL");
 		screenShot = new ScreenShot(driver);
 		// open the browser
@@ -51,7 +52,7 @@ public class LoginExcelTest {
 	@Test(dataProvider = "excel-inputs", dataProviderClass = LoginDataProviders.class)
 	public void loginDBTest(String userName, String password) {
 		loginPOM.sendUserName(userName);
-		loginPOM.sendPassword(password);
+		loginPOM.sendPassword();
 		loginPOM.clickLoginBtn();
 		screenShot.captureScreenShot(userName);
 
